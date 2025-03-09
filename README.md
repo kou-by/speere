@@ -2,6 +2,8 @@
 
 A Framework-agnostic Web Speech Recognition API wrapper.
 
+[![CI](https://github.com/kou-by/speere/actions/workflows/ci.yml/badge.svg)](https://github.com/kou-by/speere/actions/workflows/ci.yml)
+
 ```
          _
         / \
@@ -242,6 +244,56 @@ function SpeechRecognizer() {
 }
 ```
 
+### Development
+
+#### Setting Up Development Environment
+
+```bash
+# Clone the repository
+git clone https://github.com/kou-by/speere.git
+cd speere
+
+# Install dependencies
+npm install
+
+# Run in development mode
+npm run dev
+```
+
+#### Running Tests
+
+```bash
+# Run unit tests
+npm run test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run coverage
+```
+
+#### Running Linting
+
+```bash
+# Run linting
+npm run lint
+
+# Run linting with auto-fix
+npm run lint:fix
+```
+
+#### Continuous Integration
+
+This project uses GitHub Actions for continuous integration. The following checks are automatically run:
+
+- Building with Node.js 20.x
+- Code style checking with ESLint
+- Unit testing with Vitest
+- Coverage report generation
+
+When creating a PR, make sure all these checks pass.
+
 ## 日本語ドキュメント
 
 ### 概要
@@ -468,3 +520,53 @@ function SpeechRecognizer() {
   )
 }
 ```
+
+## 開発
+
+### 開発環境のセットアップ
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/kou-by/speere.git
+cd speere
+
+# 依存関係をインストール
+npm install
+
+# 開発モードで実行
+npm run dev
+```
+
+### テストの実行
+
+```bash
+# 単体テストを実行
+npm run test
+
+# テストをウォッチモードで実行
+npm run test:watch
+
+# カバレッジレポートを生成
+npm run coverage
+```
+
+### リントの実行
+
+```bash
+# リントを実行
+npm run lint
+
+# リントを実行して自動修正
+npm run lint:fix
+```
+
+### 継続的インテグレーション
+
+このプロジェクトは GitHub Actions を使用して継続的インテグレーションを実装しています。以下のチェックが自動的に実行されます：
+
+- Node.js 20.x でのビルド
+- ESLint によるコードスタイルチェック
+- Vitest による単体テスト
+- カバレッジレポートの生成
+
+PR を作成する際は、これらのチェックが全て通過することを確認してください。
