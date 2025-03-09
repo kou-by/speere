@@ -1,0 +1,24 @@
+# Code Quality Guidelines
+
+1. Test coverage:
+   - Always verify that code changes have test coverage before attempting completion.
+   - Verify that all tests pass before submitting changes.
+
+2. Lint rules:
+   - Do not invalidate any lint rule without the explicit approval of the user.
+
+3. Testing:
+   - Follow the testing approach documented in the test implementation guide.
+   - Use the "reverse-engineer from results" methodology.
+   - Structure tests using the "When {situation}, performing {action} results in {outcome}" naming convention.
+   - Implement tests using the 3A pattern (Arrange, Act, Assert), starting with assertions first.
+
+4. Git commits:
+   - Commit changes to the repository.
+   - Use meaningful commit messages that describe the changes made.
+   - Commit frequently to create a clear history of development.
+
+5. Reflection:
+   - Upon task completion, conduct a reflection session.
+   - Document the reflection in `docs/reflection.md`.
+   - Include lessons learned, challenges faced, and potential improvements.
