@@ -1,6 +1,6 @@
 # Speere
 
-A lightweight, framework-agnostic Web Speech Recognition API wrapper.
+A Framework-agnostic Web Speech Recognition API wrapper.
 
 ```
          _
@@ -72,7 +72,7 @@ The main function to initialize speech recognition.
 
 **Options:**
 
-- `grammar`: GrammarSet | SpeechGrammarList - Grammar rules for recognition
+- `grammars`: GrammarSet | SpeechGrammarList - Grammar rules for recognition
 - `continuous`: boolean - Whether to continuously recognize (default: false)
 - `interimResults`: boolean - Whether to return interim results (default: false)
 - `lang`: string - Language for recognition (default: browser's language)
