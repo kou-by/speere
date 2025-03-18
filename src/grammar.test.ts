@@ -1,15 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import {
-  rule,
-  grammarSet,
-  createGrammarList,
-  digits,
-  colors,
-  commands,
-  yesNo,
-  jaDigits,
-  jaColors,
-} from './grammar'
+import { rule, grammarSet, createGrammarList } from './grammar'
 
 /**
  * Grammar モジュールのテスト
@@ -132,104 +122,6 @@ public <animal> = dog | cat | bird;
       // 最終的なアサーション
       expect(result).toBeDefined()
       expect(result.addFromString).toHaveBeenCalledWith(grammarString, 1)
-    })
-  })
-})
-
-// Predefined Grammar Rulesのテスト
-describe('Predefined Grammar Rules', () => {
-  describe('digits function', () => {
-    it('When calling digits function, it returns a grammar rule for digits', () => {
-      // Assert: 期待される結果を定義
-      const expectedRule =
-        '#JSGF V1.0 UTF-8 en; public <digits> = zero | one | two | three | four | five | six | seven | eight | nine;'
-
-      // Act: 結果を得るために必要な操作
-      const result = digits()
-
-      // 最終的なアサーション
-      expect(result).toBe(expectedRule)
-    })
-  })
-
-  describe('colors function', () => {
-    it('When calling colors function, it returns a grammar rule for colors', () => {
-      // Assert: 期待される結果を定義
-      const expectedRule =
-        '#JSGF V1.0 UTF-8 en; public <colors> = red | green | blue | yellow | orange | purple | black | white | pink | brown;'
-
-      // Act: 結果を得るために必要な操作
-      const result = colors()
-
-      // 最終的なアサーション
-      expect(result).toBe(expectedRule)
-    })
-  })
-
-  describe('commands function', () => {
-    it('When calling commands function without custom commands, it returns a grammar rule for default commands', () => {
-      // Assert: 期待される結果を定義
-      const expectedRule =
-        '#JSGF V1.0 UTF-8 en; public <commands> = start | stop | pause | resume | cancel;'
-
-      // Act: 結果を得るために必要な操作
-      const result = commands()
-
-      // 最終的なアサーション
-      expect(result).toBe(expectedRule)
-    })
-
-    it('When calling commands function with custom commands, it returns a grammar rule including those commands', () => {
-      // Assert: 期待される結果を定義
-      const expectedRule =
-        '#JSGF V1.0 UTF-8 en; public <commands> = start | stop | pause | resume | cancel | open | close;'
-
-      // Act: 結果を得るために必要な操作
-      const result = commands(['open', 'close'])
-
-      // 最終的なアサーション
-      expect(result).toBe(expectedRule)
-    })
-  })
-
-  describe('yesNo function', () => {
-    it('When calling yesNo function, it returns a grammar rule for yes/no responses', () => {
-      // Assert: 期待される結果を定義
-      const expectedRule = '#JSGF V1.0 UTF-8 en; public <yesNo> = yes | no;'
-
-      // Act: 結果を得るために必要な操作
-      const result = yesNo()
-
-      // 最終的なアサーション
-      expect(result).toBe(expectedRule)
-    })
-  })
-
-  describe('jaDigits function', () => {
-    it('When calling jaDigits function, it returns a grammar rule for Japanese digits', () => {
-      // Assert: 期待される結果を定義
-      const expectedRule =
-        '#JSGF V1.0 UTF-8 en; public <jaDigits> = 零 | 一 | 二 | 三 | 四 | 五 | 六 | 七 | 八 | 九;'
-
-      // Act: 結果を得るために必要な操作
-      const result = jaDigits()
-
-      // 最終的なアサーション
-      expect(result).toBe(expectedRule)
-    })
-  })
-
-  describe('jaColors function', () => {
-    it('When calling jaColors function, it returns a grammar rule for Japanese colors', () => {
-      // Assert: 期待される結果を定義
-      const expectedRule =
-        '#JSGF V1.0 UTF-8 en; public <jaColors> = 赤 | 緑 | 青 | 黄 | オレンジ | 紫 | 黒 | 白 | ピンク | 茶色;'
-
-      // Act: 結果を得るために必要な操作
-      const result = jaColors()
-
-      // 最終的なアサーション
-      expect(result).toBe(expectedRule)
     })
   })
 })

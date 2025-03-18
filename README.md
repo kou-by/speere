@@ -33,12 +33,35 @@ npm install speere
 
 ```javascript
 import { speech } from 'speere'
-import { commands, colors, grammarSet } from 'speere/grammar'
+import { rule, grammarSet } from 'speere/grammar'
 
-// Create grammar set with predefined rules
+// Create grammar set with custom rules
 const myGrammar = grammarSet([
-  commands(['open', 'close']), // Custom commands
-  colors(), // Predefined colors
+  {
+    name: 'commands',
+    alternatives: [
+      'start',
+      'stop',
+      'pause',
+      'resume',
+      'cancel',
+      'open',
+      'close',
+    ],
+  },
+  {
+    name: 'colors',
+    alternatives: [
+      'red',
+      'green',
+      'blue',
+      'yellow',
+      'orange',
+      'purple',
+      'black',
+      'white',
+    ],
+  },
 ])
 
 // Initialize speech recognition
@@ -97,7 +120,7 @@ An object with the following methods:
 Speere provides a separate grammar module to make working with SpeechGrammarList easier.
 
 ```javascript
-import { rule, grammarSet, colors, commands } from 'speere/grammar'
+import { rule, grammarSet } from 'speere/grammar'
 ```
 
 #### `rule(name, items, options)`
@@ -125,20 +148,6 @@ Creates a collection of grammar rules.
 
 **Returns:**
 A grammar set object that can be passed to the speech function
-
-#### Predefined Grammar Rules
-
-Speere provides several predefined grammar rules for common use cases:
-
-- `digits()` - Numeric digits (zero through nine)
-- `colors()` - Common colors
-- `commands(customCommands)` - Common commands, can be extended
-- `yesNo()` - Yes/no responses
-
-Japanese language versions are also available:
-
-- `jaDigits()`
-- `jaColors()`
 
 ### Examples
 
@@ -188,7 +197,7 @@ window.addEventListener('beforeunload', () => {
 ```jsx
 import { useState, useEffect, useRef } from 'react'
 import { speech } from 'speere'
-import { commands, grammarSet } from 'speere/grammar'
+import { rule, grammarSet } from 'speere/grammar'
 
 function SpeechRecognizer() {
   const [transcript, setTranscript] = useState('')
@@ -198,7 +207,9 @@ function SpeechRecognizer() {
   useEffect(() => {
     if (!recognitionRef.current) {
       // Create grammar for common voice commands
-      const voiceGrammar = grammarSet([commands(['start', 'stop', 'clear'])])
+      const voiceGrammar = grammarSet([
+        { name: 'commands', alternatives: ['start', 'stop', 'clear'] },
+      ])
 
       recognitionRef.current = speech({
         grammar: voiceGrammar,
@@ -310,12 +321,26 @@ npm install speere
 
 ```javascript
 import { speech } from 'speere'
-import { commands, colors, grammarSet } from 'speere/grammar'
+import { rule, grammarSet } from 'speere/grammar'
 
-// 定義済みルールで文法セットを作成
+// カスタムルールで文法セットを作成
 const myGrammar = grammarSet([
-  commands(['開く', '閉じる']), // カスタムコマンド
-  colors(), // 定義済みの色
+  {
+    name: 'commands',
+    alternatives: [
+      '開始',
+      '停止',
+      '一時停止',
+      '再開',
+      'キャンセル',
+      '開く',
+      '閉じる',
+    ],
+  },
+  {
+    name: 'colors',
+    alternatives: ['赤', '緑', '青', '黄', 'オレンジ', '紫', '黒', '白'],
+  },
 ])
 
 // 音声認識を初期化
@@ -374,7 +399,7 @@ recognition.dispose()
 Speere は SpeechGrammarList の扱いを簡単にするための別モジュールを提供しています。
 
 ```javascript
-import { rule, grammarSet, colors, commands } from 'speere/grammar'
+import { rule, grammarSet } from 'speere/grammar'
 ```
 
 #### `rule(name, items, options)`
@@ -402,20 +427,6 @@ import { rule, grammarSet, colors, commands } from 'speere/grammar'
 
 **戻り値:**
 speech 関数に渡せる文法セットオブジェクト
-
-#### 定義済み文法ルール
-
-Speere は一般的なユースケース向けにいくつかの定義済み文法ルールを提供しています：
-
-- `digits()` - 数字（ゼロから九まで）
-- `colors()` - 一般的な色
-- `commands(customCommands)` - 一般的なコマンド、拡張可能
-- `yesNo()` - はい/いいえの応答
-
-日本語版も利用可能：
-
-- `jaDigits()`
-- `jaColors()`
 
 ### 使用例
 
@@ -465,7 +476,7 @@ window.addEventListener('beforeunload', () => {
 ```jsx
 import { useState, useEffect, useRef } from 'react'
 import { speech } from 'speere'
-import { commands, grammarSet } from 'speere/grammar'
+import { rule, grammarSet } from 'speere/grammar'
 
 function SpeechRecognizer() {
   const [transcript, setTranscript] = useState('')
@@ -474,8 +485,10 @@ function SpeechRecognizer() {
 
   useEffect(() => {
     if (!recognitionRef.current) {
-      // 一般的な音声コマンド用の文法を作成
-      const voiceGrammar = grammarSet([commands(['開始', '停止', 'クリア'])])
+      // 音声コマンド用の文法を作成
+      const voiceGrammar = grammarSet([
+        { name: 'commands', alternatives: ['開始', '停止', 'クリア'] },
+      ])
 
       recognitionRef.current = speech({
         grammar: voiceGrammar,
