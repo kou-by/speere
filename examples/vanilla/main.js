@@ -2,9 +2,6 @@
  * Speere 音声認識デモのメインエントリーポイント
  */
 
-// スタイルシートの読み込み
-import './style.css';
-
 // Speereライブラリの読み込み
 // Viteでは相対パスが異なる扱いになるため、絶対パスを使用
 import * as Speere from '../../dist/index';
@@ -14,11 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 要素の取得
   const startButton = document.getElementById('start-recognition');
   const resultText = document.getElementById('result-text');
-  const grammarSelect = document.getElementById('grammar-select');
   const statusElement = document.getElementById('status');
 
   // ライブラリからの関数を取得
-  const { speech, createGrammarList, colors, digits, commands, jaColors, jaDigits } = Speere;
+  const { speech, createGrammarList, rule } = Speere;
 
   // 音声認識インスタンス
   let recognizer = null;
@@ -26,35 +22,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 文法ルールを取得する関数
   function getSelectedGrammar() {
-    const selected = grammarSelect.value;
+    const grammarRule = rule('vanilla', [
+      'コニチワ'
+    ]);
 
-    if (selected === 'none') {
-      return null;
-    }
-
-    let grammarRule;
-    switch (selected) {
-      case 'colors':
-        grammarRule = colors();
-        break;
-      case 'digits':
-        grammarRule = digits();
-        break;
-      case 'commands':
-        grammarRule = commands();
-        break;
-      case 'jaColors':
-        grammarRule = jaColors();
-        break;
-      case 'jaDigits':
-        grammarRule = jaDigits();
-        break;
-      default:
-        return null;
-    }
+    console.log('grammarRule', grammarRule)
 
     try {
-      return createGrammarList(grammarRule);
+      return createGrammarList(rule);
     } catch (error) {
       console.error('文法ルールの作成に失敗しました:', error);
       return null;
@@ -162,14 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
       stopRecognition();
     } else {
       startRecognition();
-    }
-  });
-
-  // 文法選択変更イベント
-  grammarSelect.addEventListener('change', () => {
-    // 認識中なら一度停止
-    if (isListening) {
-      stopRecognition();
     }
   });
 

@@ -5,38 +5,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Speere - 音声認識デモ</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
 </head>
 
 <body>
-  <div class="container">
+  <main>
     <h1>Speere 音声認識デモ</h1>
 
-    <div class="speech-container">
-      <textarea id="result-text" placeholder="ここに音声認識結果が表示されます..." rows="5"></textarea>
+    <div id="status">待機中...</div>
 
-      <div class="controls">
-        <button id="start-recognition" class="btn">
-          <span class="icon">🎤</span>
-          音声認識開始
-        </button>
+    <textarea id="result-text" placeholder="ここに音声認識結果が表示されます..." rows="8"></textarea>
 
-        <div class="grammar-selector">
-          <label for="grammar-select">文法ルール:</label>
-          <select id="grammar-select">
-            <option value="none">なし</option>
-            <option value="colors">色</option>
-            <option value="digits">数字</option>
-            <option value="commands">コマンド</option>
-            <option value="jaColors">日本語の色</option>
-            <option value="jaDigits">日本語の数字</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="status" class="status">待機中...</div>
+    <div>
+      <button id="start-recognition">
+        <span>🎤</span>
+        音声認識開始
+      </button>
     </div>
 
-    <div class="info">
+    <section>
       <h2>使い方</h2>
       <ol>
         <li>文法ルールを選択（オプション）</li>
@@ -45,12 +32,12 @@
         <li>認識結果がテキストエリアに表示されます</li>
       </ol>
 
-      <div class="note">
+      <footer>
         <p>※ このデモは Chrome、Edge、Safariなどの最新ブラウザで動作します。</p>
         <p>※ 初回実行時にマイクの使用許可を求められます。</p>
-      </div>
-    </div>
-  </div>
+      </footer>
+    </section>
+  </main>
 
   <!-- Viteを使用したモジュールの読み込み -->
   <script type="module" src="./main.js"></script>
