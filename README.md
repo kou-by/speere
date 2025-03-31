@@ -3,6 +3,7 @@
 A Framework-agnostic Web Speech Recognition API wrapper.
 
 [![CI](https://github.com/kou-by/speere/actions/workflows/ci.yml/badge.svg)](https://github.com/kou-by/speere/actions/workflows/ci.yml)
+[![npm version](https://badge.fury.io/js/speere.svg)](https://badge.fury.io/js/speere)
 
 ```
          _
