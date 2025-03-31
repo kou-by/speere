@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const startButton = document.getElementById('start-recognition');
   const resultText = document.getElementById('result-text');
   const statusElement = document.getElementById('status');
+  const statusIcon = document.querySelector('.status-icon i');
 
   // ライブラリからの関数を取得
   const { speech, createGrammarList, rule } = Speere;
@@ -53,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ステータス更新
     statusElement.textContent = '音声認識を開始しています...';
     statusElement.className = 'status waiting';
+    statusIcon.className = 'fas fa-spinner fa-spin';
 
     try {
       // 音声認識インスタンスの作成
@@ -66,9 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
         onStart: () => {
           isListening = true;
           startButton.querySelector('.icon').textContent = '⏹️';
-          startButton.textContent = '停止';
+          startButton.querySelector('span:not(.icon)').textContent = '停止';
           statusElement.textContent = '聞いています...';
           statusElement.className = 'status listening';
+          statusIcon.className = 'fas fa-circle listening';
         },
 
         // 認識結果のコールバック
@@ -83,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (isFinal) {
             statusElement.textContent = '認識完了';
             statusElement.className = 'status ready';
+            statusIcon.className = 'fas fa-check-circle';
 
             // 自動的に認識を停止
             setTimeout(() => {
@@ -96,10 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // 認識終了時のコールバック
         onEnd: () => {
           isListening = false;
-          startButton.textContent = '音声認識開始';
           startButton.querySelector('.icon').textContent = '🎤';
+          startButton.querySelector('span:not(.icon)').textContent = '音声認識開始';
           statusElement.textContent = '待機中...';
           statusElement.className = 'status';
+          statusIcon.className = 'fas fa-circle';
         },
 
         // エラー時のコールバック
@@ -107,10 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
           console.error('音声認識エラー:', error);
           statusElement.textContent = `エラー: ${error}`;
           statusElement.className = 'status';
-
+          statusIcon.className = 'fas fa-exclamation-circle';
           isListening = false;
-          startButton.textContent = '音声認識開始';
           startButton.querySelector('.icon').textContent = '🎤';
+          startButton.querySelector('span:not(.icon)').textContent = '音声認識開始';
         }
       });
 
@@ -121,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('音声認識の初期化に失敗しました:', error);
       statusElement.textContent = `初期化エラー: ${error.message}`;
       statusElement.className = 'status';
+      statusIcon.className = 'fas fa-exclamation-circle';
     }
   }
 
@@ -148,9 +154,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     statusElement.textContent = '準備完了';
     statusElement.className = 'status ready';
+    statusIcon.className = 'fas fa-check-circle';
   } catch (error) {
     console.error(error);
     statusElement.textContent = error.message;
+    statusIcon.className = 'fas fa-exclamation-circle';
     startButton.disabled = true;
   }
 });

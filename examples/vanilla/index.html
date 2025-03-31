@@ -5,39 +5,358 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Speere - 音声認識デモ</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3a0ca3;
+      --accent-color: #7209b7;
+      --success-color: #4cc9f0;
+      --warning-color: #f72585;
+      --background-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-color: #333333;
+      --light-text: #6c757d;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      color: var(--light-text);
+      margin-bottom: 2rem;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 2rem;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .recognition-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .status-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: var(--border-radius);
+      background-color: rgba(67, 97, 238, 0.1);
+    }
+
+    .status-icon {
+      font-size: 1.25rem;
+    }
+
+    #status {
+      color: var(--primary-color);
+    }
+
+    .status.listening {
+      color: var(--success-color);
+      animation: pulse 1.5s infinite;
+    }
+
+    .status.waiting {
+      color: var(--warning-color);
+    }
+
+    .status.ready {
+      color: var(--success-color);
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.6;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    #result-text {
+      width: 100%;
+      min-height: 150px;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-size: 1.1rem;
+      resize: vertical;
+      transition: var(--transition);
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    #result-text:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.25);
+    }
+
+    .button-container {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-icon {
+      font-size: 1.2rem;
+    }
+
+    .instruction-card h2 {
+      color: var(--secondary-color);
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+
+    .steps {
+      padding-left: 1.5rem;
+    }
+
+    .steps li {
+      margin-bottom: 0.75rem;
+      position: relative;
+    }
+
+    .steps li::before {
+      content: '';
+      position: absolute;
+      left: -1.5rem;
+      top: 0.5rem;
+      width: 0.5rem;
+      height: 0.5rem;
+      background-color: var(--accent-color);
+      border-radius: 50%;
+    }
+
+    .note {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: rgba(67, 97, 238, 0.1);
+      border-radius: var(--border-radius);
+    }
+
+    .note p {
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+      color: var(--light-text);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 1.5rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      color: var(--accent-color);
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+      color: var(--secondary-color);
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem 0;
+      border-top: 1px solid #eee;
+      color: var(--light-text);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <main>
-    <h1>Speere 音声認識デモ</h1>
+  <div class="container">
+    <header>
+      <h1>Speere 音声認識デモ</h1>
+      <p class="tagline">ブラウザのSpeech Recognition APIを使用したシンプルかつ強力な音声認識システム</p>
+    </header>
 
-    <div id="status">待機中...</div>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-microphone"></i>
+        </div>
+        <h3>音声認識技術</h3>
+        <p>ブラウザ内蔵のSpeech Recognitionを使用してリアルタイムで音声を認識します。</p>
+      </div>
 
-    <textarea id="result-text" placeholder="ここに音声認識結果が表示されます..." rows="8"></textarea>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-code"></i>
+        </div>
+        <h3>簡単実装</h3>
+        <p>Speereライブラリを使用することで、少ないコードで音声認識機能を実装できます。</p>
+      </div>
 
-    <div>
-      <button id="start-recognition">
-        <span>🎤</span>
-        音声認識開始
-      </button>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-language"></i>
+        </div>
+        <h3>多言語対応</h3>
+        <p>英語だけでなく、日本語などの多言語での音声認識をサポートしています。</p>
+      </div>
     </div>
 
-    <section>
-      <h2>使い方</h2>
-      <ol>
-        <li>文法ルールを選択（オプション）</li>
-        <li>「音声認識開始」ボタンをクリック</li>
-        <li>マイクに向かって話す</li>
-        <li>認識結果がテキストエリアに表示されます</li>
-      </ol>
+    <div class="main-content">
+      <div class="card recognition-panel">
+        <div class="status-container">
+          <span class="status-icon"><i class="fas fa-circle"></i></span>
+          <span id="status">待機中...</span>
+        </div>
+        <textarea id="result-text" placeholder="ここに音声認識結果が表示されます..." rows="5"></textarea>
+        <div class="button-container">
+          <button id="start-recognition" class="btn">
+            <span class="btn-icon icon">🎤</span>
+            <span>音声認識開始</span>
+          </button>
+        </div>
+      </div>
 
-      <footer>
-        <p>※ このデモは Chrome、Edge、Safariなどの最新ブラウザで動作します。</p>
-        <p>※ 初回実行時にマイクの使用許可を求められます。</p>
-      </footer>
-    </section>
-  </main>
+      <div class="card instruction-card">
+        <h2>使い方</h2>
+        <ol class="steps">
+          <li>「音声認識開始」ボタンをクリック</li>
+          <li>マイクの使用許可があれば「許可」をクリック</li>
+          <li>マイクに向かって話す</li>
+          <li>認識結果がリアルタイムでテキストエリアに表示されます</li>
+        </ol>
+        <div class="note">
+          <p>※ このデモは Chrome、Edge、Safariなどの最新ブラウザで動作します。</p>
+          <p>※ 初回実行時にマイクの使用許可を求められます。</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2025 Speere - シンプルな音声認識ライブラリ</p>
+    </footer>
+  </div>
 
   <!-- Viteを使用したモジュールの読み込み -->
   <script type="module" src="./main.js"></script>

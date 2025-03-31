@@ -298,7 +298,6 @@ npm run lint:fix
 
 This project uses GitHub Actions for continuous integration. The following checks are automatically run:
 
-- Building with Node.js 20.x
 - Code style checking with ESLint
 - Unit testing with Vitest
 - Coverage report generation
@@ -577,7 +576,6 @@ npm run lint:fix
 
 このプロジェクトは GitHub Actions を使用して継続的インテグレーションを実装しています。以下のチェックが自動的に実行されます：
 
-- Node.js 20.x でのビルド
 - ESLint によるコードスタイルチェック
 - Vitest による単体テスト
 - カバレッジレポートの生成

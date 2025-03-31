@@ -9,12 +9,12 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "require": "./dist/index.cjs"
     },
     "./grammar": {
       "types": "./dist/grammar.d.ts",
       "import": "./dist/grammar.mjs",
-      "require": "./dist/grammar.js"
+      "require": "./dist/grammar.cjs"
     }
   },
   "files": [
@@ -30,8 +30,11 @@
     "lint:fix": "eslint . --fix"
   },
   "keywords": [],
-  "author": "",
-  "description": "",
+  "author": "KOU inc.",
+  "license": "MIT",
+  "description": "A Framework-agnostic Web Speech Recognition API wrapper.",
+  "repository": "https://github.com/kou-by/speere",
+  "bugs": "https://github.com/kou-by/speere/issues",
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@types/dom-speech-recognition": "^0.0.4",

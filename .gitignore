@@ -3,3 +3,5 @@ cline_docs
 coverage
 node_modules
 dist
+
+docs/reflection.md
