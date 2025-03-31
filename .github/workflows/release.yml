@@ -34,4 +34,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub Releases 作成用
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # npm publish 用 (事前に GitHub Secrets に設定してね！)
-        run: npx np --no-yarn --any-branch # np を実行してリリース
+        run: npx np --no-yarn --any-branch --branch main # np を実行してリリース (mainブランチを指定)
