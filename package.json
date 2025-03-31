@@ -17,6 +17,9 @@
       "require": "./dist/grammar.cjs"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],
@@ -27,7 +30,8 @@
     "test:watch": "vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "release": "npm run build && np"
   },
   "keywords": [],
   "author": "KOU inc.",
@@ -42,6 +46,7 @@
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
     "jsdom": "^26.0.0",
+    "np": "^10.2.0",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.0",
