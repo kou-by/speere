@@ -18,17 +18,18 @@ function SpeechRecognizer() {
     if (!recognitionRef.current) {
       try {
         // 音声コマンド用の文法を作成
-        const voiceGrammarString = grammarSet([
-          { name: 'commands', alternatives: ['start', 'stop', 'clear'] },
-        ])
+        // const voiceGrammarString = grammarSet([
+        //   { name: 'commands', alternatives: ['start', 'stop', 'clear'] },
+        // ])
         // 文法文字列をSpeechGrammarListオブジェクトに変換
-        const voiceGrammar = createGrammarList(voiceGrammarString)
+        // const voiceGrammar = createGrammarList(voiceGrammarString)
         recognitionRef.current = speech({
-          grammars: voiceGrammar,
+          // grammars: voiceGrammar,
           lang: 'ja-JP', // 日本語を使用
           continuous: true,
           interimResults: true,
           onResult: (results, isFinal) => {
+            console.log('results', results)
             if (results && results.length > 0) {
               // 音声認識中のアニメーション状態を設定
               setAnimationState('active')
@@ -137,17 +138,6 @@ function SpeechRecognizer() {
         setErrorMessage(
           '音声認識機能を初期化できませんでした。ブラウザの互換性を確認してください。'
         )
-      }
-    }
-
-    // コンポーネントのアンマウント時にクリーンアップ
-    return () => {
-      if (recognitionRef.current) {
-        try {
-          recognitionRef.current.stop()
-        } catch (e) {
-          console.error('クリーンアップ中にエラーが発生しました:', e)
-        }
       }
     }
   }, [isListening])
