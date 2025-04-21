@@ -3,7 +3,6 @@
  */
 import { useState, useEffect, useRef } from 'react'
 import { speech } from '../../src/speech'
-import { grammarSet, createGrammarList } from '../../src/grammar'
 
 function SpeechRecognizer() {
   const [transcript, setTranscript] = useState('')

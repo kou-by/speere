@@ -1,11 +1,4 @@
 /**
- * Web Speech Recognition API のラッパー関数
- *
- * このモジュールは、ブラウザのWeb Speech APIを使いやすくラップします。
- * フレームワークに依存せず、どのJavaScriptプロジェクトでも使用可能です。
- */
-
-/**
  * speech関数のオプションインターフェース
  */
 export interface SpeechOptions {
@@ -66,7 +59,6 @@ export interface SpeechOptions {
  * @returns 音声認識を制御するメソッドを持つオブジェクト
  */
 export function speech(options: SpeechOptions = {}) {
-  // SpeechRecognition APIの取得
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition
 
@@ -74,10 +66,8 @@ export function speech(options: SpeechOptions = {}) {
     throw new Error('Speech Recognition is not supported in this browser')
   }
 
-  // 認識インスタンスの作成
   const recognition = new SpeechRecognition()
 
-  // オプションの設定
   if (options.grammars) {
     recognition.grammars = options.grammars
   }
@@ -151,6 +141,7 @@ export function speech(options: SpeechOptions = {}) {
       // 進行中の認識を停止
       try {
         recognition.abort()
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_e) {
         // 既に終了している場合はエラーを無視
       }
