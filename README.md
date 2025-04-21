@@ -18,6 +18,8 @@ A Framework-agnostic Web Speech Recognition API wrapper.
 /=========================================>
 ```
 
+[日本語 README](#日本語ドキュメント)
+
 ## English Documentation
 
 ### Overview
