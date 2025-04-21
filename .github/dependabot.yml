@@ -1,0 +1,29 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    target-branch: 'main'
+    commit-message:
+      prefix: 'fix(deps)'
+      include: 'scope'
+
+  - package-ecosystem: 'npm'
+    directory: '/examples/react'
+    schedule:
+      interval: 'weekly'
+    target-branch: 'main'
+    commit-message:
+      prefix: 'fix(deps)'
+      include: 'scope'
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    target-branch: 'main'
+    commit-message:
+      prefix: 'chore(deps)'
+      include: 'scope'
+
