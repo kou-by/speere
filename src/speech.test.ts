@@ -160,30 +160,30 @@ describe('speech function', () => {
   })
 
   it('When calling start method with MediaStreamTrack, it passes the track to recognition.start', () => {
-    // Arrange
+    // Arrange: 操作に必要な準備
     const recognitionObj = speech({})
     const mockAudioTrack = {
       kind: 'audio',
       readyState: 'live',
     } as MediaStreamTrack
 
-    // Act
+    // Act: 結果を得るために必要な操作
     recognitionObj.start(mockAudioTrack)
 
-    // Assert
+    // Assert: 期待される結果を確認
     expect(mockRecognitionInstance.start).toHaveBeenCalledTimes(1)
     expect(mockRecognitionInstance.start).toHaveBeenCalledWith(mockAudioTrack)
   })
 
   it('When calling start method with video track, it throws InvalidStateError', () => {
-    // Arrange
+    // Arrange: 操作に必要な準備
     const recognitionObj = speech({})
     const mockVideoTrack = {
       kind: 'video',
       readyState: 'live',
     } as MediaStreamTrack
 
-    // Act & Assert
+    // Act & Assert: 操作とアサーションを組み合わせる
     expect(() => recognitionObj.start(mockVideoTrack)).toThrow(DOMException)
     expect(() => recognitionObj.start(mockVideoTrack)).toThrow(
       'The provided MediaStreamTrack must be an audio track'
@@ -192,14 +192,14 @@ describe('speech function', () => {
   })
 
   it('When calling start method with ended audio track, it throws InvalidStateError', () => {
-    // Arrange
+    // Arrange: 操作に必要な準備
     const recognitionObj = speech({})
     const mockEndedTrack = {
       kind: 'audio',
       readyState: 'ended',
     } as MediaStreamTrack
 
-    // Act & Assert
+    // Act & Assert: 操作とアサーションを組み合わせる
     expect(() => recognitionObj.start(mockEndedTrack)).toThrow(DOMException)
     expect(() => recognitionObj.start(mockEndedTrack)).toThrow(
       'The provided MediaStreamTrack must be in "live" state'
@@ -208,23 +208,23 @@ describe('speech function', () => {
   })
 
   it('When audioTrack is provided in options, it uses that track on start', () => {
-    // Arrange
+    // Arrange: 操作に必要な準備
     const mockAudioTrack = {
       kind: 'audio',
       readyState: 'live',
     } as MediaStreamTrack
     const recognitionObj = speech({ audioTrack: mockAudioTrack })
 
-    // Act
+    // Act: 結果を得るために必要な操作
     recognitionObj.start()
 
-    // Assert
+    // Assert: 期待される結果を確認
     expect(mockRecognitionInstance.start).toHaveBeenCalledTimes(1)
     expect(mockRecognitionInstance.start).toHaveBeenCalledWith(mockAudioTrack)
   })
 
   it('When both options.audioTrack and parameter audioTrack are provided, parameter takes precedence', () => {
-    // Arrange
+    // Arrange: 操作に必要な準備
     const optionsTrack = {
       kind: 'audio',
       readyState: 'live',
@@ -235,10 +235,10 @@ describe('speech function', () => {
     } as MediaStreamTrack
     const recognitionObj = speech({ audioTrack: optionsTrack })
 
-    // Act
+    // Act: 結果を得るために必要な操作
     recognitionObj.start(parameterTrack)
 
-    // Assert
+    // Assert: 期待される結果を確認
     expect(mockRecognitionInstance.start).toHaveBeenCalledTimes(1)
     expect(mockRecognitionInstance.start).toHaveBeenCalledWith(parameterTrack)
   })
