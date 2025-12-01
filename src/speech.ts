@@ -50,6 +50,12 @@ export interface SpeechOptions {
    * エラー時のコールバック
    */
   onError?: (error: SpeechRecognitionErrorCode) => void
+
+  /**
+   * 音声入力として使用するMediaStreamTrack
+   * 指定しない場合はデフォルトのマイクを使用
+   */
+  audioTrack?: MediaStreamTrack
 }
 
 /**
@@ -111,9 +117,29 @@ export function speech(options: SpeechOptions = {}) {
   return {
     /**
      * 音声認識を開始
+     * @param audioTrack - オプション: 使用する音声トラック
      */
-    start: () => {
-      recognition.start()
+    start: (audioTrack?: MediaStreamTrack) => {
+      const trackToUse = audioTrack || options.audioTrack
+      
+      if (trackToUse) {
+        if (trackToUse.kind !== 'audio') {
+          throw new DOMException(
+            'The provided MediaStreamTrack must be an audio track',
+            'InvalidStateError'
+          )
+        }
+        if (trackToUse.readyState !== 'live') {
+          throw new DOMException(
+            'The provided MediaStreamTrack must be in "live" state',
+            'InvalidStateError'
+          )
+        }
+        // @ts-expect-error - Web Speech API仕様の新しいメソッドシグネチャ
+        recognition.start(trackToUse)
+      } else {
+        recognition.start()
+      }
     },
 
     /**
